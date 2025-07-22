@@ -42,7 +42,7 @@ export default function About() {
     <section id="about" className="py-12 px-[--spacing-container]">
       {/* Added max-w-6xl mx-auto wrapper for consistent desktop content width */}
       <div className="max-w-6xl mx-auto"> 
-        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">About Me</h2> {/* Added text-center for consistency */}
+        <h2 className="text-3xl md:text-5xl font-bold mb-12">About Me</h2> {/* Added text-center for consistency */}
 
         {/* Adjusted gap for better responsiveness across more breakpoints */}
         <div className="bento-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-3 sm:gap-4 md:gap-6">
@@ -56,12 +56,12 @@ export default function About() {
               height={290}
               className={imageBaseClasses}
             />
-            <h3 className={headingClasses}>Hi, I&apos;m Jegabig</h3> {/* FIXED: Escaped apostrophe */}
+            <h3 className={headingClasses}>Hi, I am Jegabig</h3> 
             <p className={paragraphClasses}>I&apos;m a Web Developer and AI Engineer specializing in building custom AI. I have helped startups and solo founders bring their AI ideas to life.</p> {/* FIXED: Escaped apostrophe */}
           </div>
 
           {/* Bento Box 2: Tech Stack */}
-          <div className={`${bentoBoxBaseClasses} lg:col-span-5`}> {/* Removed redundant rounded-2xl */}
+          <div className={`${bentoBoxBaseClasses} lg:col-span-5`}> 
             <Image
               src="/grid2.png"
               alt="AI Solutions"
