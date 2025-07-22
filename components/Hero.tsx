@@ -112,7 +112,7 @@ export default function Hero() {
 
           <a href="#contact" className="mt-8 bg-[var(--color-primary)] text-white px-6 py-2 rounded-md text-sm font-medium hover:opacity-90 transition flex items-center justify-center relative inline-flex">
             <span className="absolute left-3 w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            Let's Talk
+            Let&apos;s Talk
           </a>
         </div>
 
