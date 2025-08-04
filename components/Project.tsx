@@ -132,13 +132,9 @@ const Project = () => {
       </div>
       </div>
 
-      {/* Conditional Rendering based on isMobile state */}
-      {/* On SSR, isMobile is false, so it renders the desktop section first */}
-
-      {/* Conditional Rendering based on isMobile state */}
-      {/* On SSR, isMobile is false, so it renders the desktop section first */}
+     
       {isMobile ? (
-        // MOBILE: Stack projects
+   
         <section className="px-[--spacing-container] pb-20">
           <div className="max-w-6xl mx-auto"> 
           <div className="flex flex-col gap-20">
@@ -267,6 +263,8 @@ const Project = () => {
                       height: "100vh",
                       pointerEvents: "none",
                       position: "relative",
+                      zIndex: 0,
+                      background: i % 2 === 0 ? "rgba(255,255,255,0.015)" : "transparent",
                     }}
                   />
                 ))}
