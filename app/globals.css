@@ -1,40 +1,82 @@
 @import "tailwindcss";
 
-:root {
-  /* Color Palette */
-  --color-white: #FFFFFF;
-  --color-black: #000000;
+@theme {
   --color-primary: #CE7659;
-  --color-dark: #1F1F1F;
+  --color-primary-hover: #b86246;
+  --color-accent: #8b5cf6; /* Modern violet accent */
+  --color-dark: #0f0f12;
+  --color-glass-bg: rgba(255, 255, 255, 0.02);
+  --color-glass-border: rgba(255, 255, 255, 0.07);
 
-  /* Fonts */
-  --font-heading: 'Geist Mono', monospace;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: var(--font-geist-mono), monospace;
+  --font-body: var(--font-geist-sans), sans-serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 10px rgba(206, 118, 89, 0.3), 0 0 20px rgba(139, 92, 246, 0.2); }
+    to { text-shadow: 0 0 15px rgba(206, 118, 89, 0.5), 0 0 30px rgba(139, 92, 246, 0.4); }
+  }
+}
+
+:root {
+  /* Fonts mapped to Next.js Geist variables */
+  --font-heading: var(--font-geist-mono);
+  --font-body: var(--font-geist-sans);
 
   /* Layout */
-   --spacing-container: 1.5rem;
+  --spacing-container: 1.5rem;
 }
 
 @layer base {
   html {
     font-family: var(--font-body);
-    background-color: var(--color-black);
-    color: var(--color-white);
+    background-color: #030303;
+    color: #FFFFFF;
     scroll-behavior: smooth;
   }
 
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, .font-heading {
     font-family: var(--font-heading);
+    letter-spacing: -0.025em;
   }
 
   body {
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    /* Deep space background with subtle gradient glows */
+    background: radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(206, 118, 89, 0.04) 0%, transparent 45%),
+                #050508;
+    background-attachment: fixed;
   }
 
-  section {
-    padding-left: var(--spacing-container);
-    padding-right: var(--spacing-container);
+  /* Custom thin scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050508;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+  }
+
+  /* Selection style */
+  ::selection {
+    background: rgba(206, 118, 89, 0.3);
+    color: #ffffff;
   }
 }
 
@@ -43,13 +85,43 @@
     padding-left: var(--spacing-container);
     padding-right: var(--spacing-container);
   }
+
+  /* Premium glassmorphism panel */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-panel:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(206, 118, 89, 0.25);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5),
+                0 0 20px -5px rgba(206, 118, 89, 0.05);
+  }
+
+  /* Gradient text */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #ffffff 30%, #e5e5e5 60%, #CE7659 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #CE7659 0%, #a766eb 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .fade-in {
-  animation: fadeIn 0.5s ease-in;
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+

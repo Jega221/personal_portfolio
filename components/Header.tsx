@@ -27,56 +27,75 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 section-container ${
-        scrolled ? 'bg-[var(--color-black)]/80 backdrop-blur border-b border-white/10' : ''
+      className={`fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-5xl z-50 transition-all duration-500 rounded-2xl ${
+        scrolled
+          ? 'bg-[#050508]/75 backdrop-blur-md border border-white/10 shadow-lg shadow-black/50 py-3'
+          : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-6xl mx-auto py-4 flex items-center justify-between"> 
+      <div className="mx-auto px-6 flex items-center justify-between"> 
         {/* Logo */}
-        <Link href="home" className="text-xl font-bold font-[var(--font-heading)] text-white">
-          Jegabig
+        <Link href="#home" className="text-xl font-bold font-heading text-white tracking-tight hover:opacity-80 transition-opacity">
+          Jegabig<span className="text-primary font-bold font-sans">.</span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex space-x-6 text-sm font-medium text-white">
+        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="hover:text-[var(--color-primary)] transition-colors"
+              className="text-white/70 hover:text-white transition-all relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:bg-primary after:transition-all after:duration-300"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
+        {/* Contact Button */}
+        <div className="hidden md:block">
+          <a
+            href="#contact"
+            className="border border-white/15 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-xs font-semibold px-4 py-2 rounded-full text-white"
+          >
+            Get in Touch
+          </a>
+        </div>
+
         {/* Hamburger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-white"
+          className="md:hidden text-white/80 hover:text-white"
           aria-label="Toggle Menu"
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-  <div className="md:hidden bg-[var(--color-black)] py-6 text-white text-sm font-medium">
-    <div className="max-w-6xl mx-auto px-[--spacing-container] space-y-4">
-      {navLinks.map((link) => (
-        <a
-          key={link.href}
-          href={link.href}
-          onClick={() => setMobileMenuOpen(false)}
-          className="block hover:text-[var(--color-primary)] transition-colors"
-        >
-          {link.label}
-        </a>
-      ))}
-    </div>
-  </div>
-)}
+        <div className="md:hidden bg-[#050508]/95 backdrop-blur-lg mt-3 rounded-2xl border border-white/10 py-6 text-white text-sm font-medium">
+          <div className="space-y-4 px-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-white/70 hover:text-white hover:translate-x-1 transition-all duration-300"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-center border border-white/15 bg-white/5 py-2 rounded-xl text-white text-xs"
+            >
+              Get in Touch
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

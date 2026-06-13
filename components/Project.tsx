@@ -135,28 +135,36 @@ const Project = () => {
       {isMobile ? (
         <section className="px-[--spacing-container] pb-20">
           <div className="max-w-6xl mx-auto"> 
-            <div className="flex flex-col gap-20">
+            <div className="flex flex-col gap-12">
               {projectsData.map((project, index) => (
-                <div key={index} className="fade-in">
-                  {/* CHANGE: Use next/image on mobile too for optimization */}
+                <div key={index} className="fade-in glass-panel p-5 rounded-2xl flex flex-col gap-4">
                   <Image
                     src={project.imageSrc}
                     alt={project.title}
                     width={1600}
                     height={900}
-                    className="w-full rounded-xl object-cover"
-                    priority={index === 0} // CHANGE: First image loads instantly
+                    className="w-full rounded-xl object-cover aspect-video"
+                    priority={index === 0}
                   />
-                  <div className="mt-4">
-                    <h3 className="text-2xl font-heading text-white">
+                  <div>
+                    <h3 className="text-xl font-heading text-white font-semibold">
                       {project.title}
                     </h3>
-                    <p className="text-white/80 mt-2 text-sm leading-relaxed">
+                    {project.tags && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="text-[9px] uppercase tracking-wider font-mono px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.07] text-white/50">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-white/70 mt-3 text-sm leading-relaxed">
                       {project.description}
                     </p>
                     <a
                       href={project.link}
-                      className="mt-3 inline-flex items-center gap-1 text-sm text-primary underline"
+                      className="mt-4 inline-flex items-center gap-1 text-sm text-primary hover:text-primary-hover underline"
                     >
                       Link
                       <svg
@@ -182,7 +190,7 @@ const Project = () => {
         </section>
       ) : (
         // DESKTOP
-        <section id="projects" className="relative py-28 px-[--spacing-container]">
+        <section id="project" className="relative py-28 px-[--spacing-container]">
           <div className="max-w-6xl mx-auto"> 
             <div className="relative flex flex-col md:flex-row gap-10 md:gap-16 items-start">
               {/* Number List */}
@@ -194,7 +202,7 @@ const Project = () => {
                   <span
                     key={i}
                     className={`project-number cursor-pointer transition-opacity duration-300 ${
-                      activeProjectIndex === i ? "opacity-100" : "opacity-30"
+                      activeProjectIndex === i ? "opacity-100 text-primary" : "opacity-30"
                     }`}
                     onClick={() => handleClickNumber(i)}
                   >
@@ -205,30 +213,40 @@ const Project = () => {
 
               {/* Project Content */}
               <div className="flex-1 relative">
-                <div className="project-sticky-content md:sticky md:top-1/2 md:-translate-y-1/2 md:w-full max-w-xl mx-auto">
-                  <div ref={projectContentRef} className="project-content-item w-full">
+                <div className="project-sticky-content md:sticky md:top-1/2 md:-translate-y-1/2 md:w-full max-w-2xl mx-auto">
+                  <div ref={projectContentRef} className="project-content-item w-full glass-panel p-6 rounded-3xl shadow-2xl shadow-black/40">
                     {currentProject && (
                       <>
-                        {/* CHANGE: Use next/image and priority for first image */}
-                        <Image
-                          src={currentProject.imageSrc}
-                          alt={currentProject.title}
-                          width={1600}
-                          height={900}
-                          className="w-full rounded-xl object-cover"
-                          priority={activeProjectIndex === 0}
-                        />
+                        <div className="overflow-hidden rounded-2xl">
+                          <Image
+                            src={currentProject.imageSrc}
+                            alt={currentProject.title}
+                            width={1600}
+                            height={900}
+                            className="w-full object-cover aspect-video hover:scale-[1.02] transition-transform duration-700 ease-out"
+                            priority={activeProjectIndex === 0}
+                          />
+                        </div>
                         <div className="mt-6">
-                          <h3 className="text-2xl font-heading text-white">
+                          <h3 className="text-2xl font-heading text-white font-semibold">
                             {currentProject.title}
                           </h3>
-                          <div className="flex justify-between items-start gap-6 mt-3">
-                            <p className="text-white/80 max-w-[70%] text-sm leading-relaxed">
+                          {currentProject.tags && (
+                            <div className="flex flex-wrap gap-1.5 mt-2">
+                              {currentProject.tags.map((tag) => (
+                                <span key={tag} className="text-[10px] uppercase tracking-wider font-mono px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.07] text-white/50">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                          <div className="flex justify-between items-start gap-6 mt-4">
+                            <p className="text-white/70 max-w-[75%] text-sm leading-relaxed font-body">
                               {currentProject.description}
                             </p>
                             <a
                               href={currentProject.link}
-                              className="text-primary underline inline-flex items-center gap-1 text-sm"
+                              className="text-primary hover:text-primary-hover underline inline-flex items-center gap-1 text-sm font-semibold transition-colors duration-300"
                             >
                               Link
                               <svg

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -11,7 +11,7 @@ const servicesData = [
   {
     icon: (
       <svg
-        xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)"
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -35,7 +35,7 @@ const servicesData = [
   {
     icon: (
       <svg
-        xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)"
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -55,7 +55,7 @@ const servicesData = [
   {
     icon: (
       <svg
-        xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)"
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -76,7 +76,7 @@ const servicesData = [
   {
     icon: (
       <svg
-        xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)"
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -96,42 +96,62 @@ const servicesData = [
 ]
 
 export default function Services() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
-    
-    gsap.to('.service-card', {
-      opacity: 1, 
-      y: 0,     
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '#services',
-        start: '50',
-        end: 'bottom 10%',
-      },
-    })
+    if (!containerRef.current) return
+
+    const cards = containerRef.current.querySelectorAll('.service-card')
+
+    gsap.fromTo(
+      cards,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    )
   }, [])
 
   return (
-    <section id="services" className="py-20 px-[--spacing-container] bg-black text-white">
-      <div className="max-w-6xl mx-auto"> 
-      {/* Section Heading */}
-      <h2 className="text-4xl md:text-5xl font-bold mb-12 ">Services</h2> {/* Added text-center */}
+    <section id="services" ref={containerRef} className="py-24 px-[--spacing-container] bg-transparent text-white relative">
+      <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px] pointer-events-none -z-10" />
 
-      {/* Services Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {servicesData.map((service, index) => (
-          <div
-            key={index}
-            
-            className="service-card bg-transparent p-6 rounded-lg flex flex-col items-start text-left opacity-0 translate-y-12" // Added opacity-0 and translate-y-12
-          >
-            <div className="mb-4">{service.icon}</div>
-            <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-            <p className="text-gray-300 text-sm leading-relaxed">{service.description}</p>
-          </div>
-        ))}
-      </div>
+      <div className="max-w-6xl mx-auto"> 
+        {/* Section Heading */}
+        <h2 className="text-3xl md:text-5xl font-bold mb-16 text-left text-white font-heading">
+          Services
+        </h2>
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {servicesData.map((service, index) => (
+            <div
+              key={index}
+              className="service-card glass-panel p-8 rounded-2xl flex flex-col items-start text-left hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              
+              <div className="mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 relative z-10">
+                {service.icon}
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white font-heading group-hover:text-primary transition-colors duration-300 relative z-10">
+                {service.title}
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed font-body relative z-10">
+                {service.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
