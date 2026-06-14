@@ -13,8 +13,8 @@ export default function Footer() {
     },
     {
       label: 'WhatsApp',
-      value: '+90 548 852 71 43',
-      href: 'https://wa.me/905488527143',
+      value: '+90 533 834 35 98',
+      href: 'https://wa.me/905338343598',
       actionText: 'Send a message',
       color: 'from-green-500/10 to-green-500/0',
     },
